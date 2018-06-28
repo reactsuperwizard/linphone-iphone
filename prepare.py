@@ -99,6 +99,7 @@ class IOSPreparator(prepare.Preparator):
     def __init__(self, targets=ios_targets, virtual_targets=ios_virtual_targets):
         prepare.Preparator.__init__(self, targets, default_targets=['armv7', 'arm64', 'x86_64'], virtual_targets=virtual_targets)
         self.veryclean = True
+        self.release_with_debug_info = True
         self.show_gpl_disclaimer = True
         self.argparser.add_argument('-ac', '--all-codecs', help="Enable all codecs, including the non-free ones. Final application must comply with their respective license (see README.md).", action='store_true')
 
