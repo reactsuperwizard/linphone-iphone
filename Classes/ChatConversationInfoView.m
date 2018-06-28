@@ -253,7 +253,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 						   confirmMessage:NSLocalizedString(@"LEAVE", nil)
 							onCancelClick:^() {}
 					  onConfirmationClick:^() {
-						  linphone_chat_room_leave(_room);
+						  linphone_chat_room_leave(self.room);
 					  }];
 }
 

@@ -592,7 +592,6 @@
 		63BE7A781D75BDF6000990EF /* ShopTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BE7A771D75BDF6000990EF /* ShopTableView.m */; };
 		63C441C31BBC23ED0053DC5E /* UIAssistantTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C441C21BBC23ED0053DC5E /* UIAssistantTextField.m */; };
 		63CAACDB1C91D10200216F8D /* NotificationTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CAACD51C91D0D100216F8D /* NotificationTester.m */; };
-		63CD4B4F1A5AAC8C00B84282 /* DTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CD4B4E1A5AAC8C00B84282 /* DTAlertView.m */; };
 		63CDC45E1C3BDE370085F529 /* msg.caf in Resources */ = {isa = PBXBuildFile; fileRef = 63CDC4531C3BDE370085F529 /* msg.caf */; };
 		63CDC45F1C3BDE370085F529 /* ringback.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63CDC4541C3BDE370085F529 /* ringback.wav */; };
 		63CDC4661C3BDE370085F529 /* shortring.caf in Resources */ = {isa = PBXBuildFile; fileRef = 63CDC45C1C3BDE370085F529 /* shortring.caf */; };
@@ -740,7 +739,6 @@
 		D37DC7181594AF3400B2A5EB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37DC7171594AF3400B2A5EB /* MessageUI.framework */; };
 		D37E3ECD1619C27A0087659A /* CAAnimation+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = D37E3ECC1619C27A0087659A /* CAAnimation+Blocks.m */; };
 		D37EE10D16035793003608A6 /* ImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D37EE11016035793003608A6 /* ImageView.xib */; };
-		D37EE162160377D7003608A6 /* DTActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = D37EE161160377D7003608A6 /* DTActionSheet.m */; };
 		D3807FBF15C28940005BE9BC /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = D3807FB815C28940005BE9BC /* DCRoundSwitch.m */; };
 		D3807FC115C28940005BE9BC /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3807FBA15C28940005BE9BC /* DCRoundSwitchKnobLayer.m */; };
 		D3807FC315C28940005BE9BC /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3807FBC15C28940005BE9BC /* DCRoundSwitchOutlineLayer.m */; };
@@ -1609,8 +1607,6 @@
 		63C441C21BBC23ED0053DC5E /* UIAssistantTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAssistantTextField.m; sourceTree = "<group>"; };
 		63CAACD41C91D0D100216F8D /* NotificationTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTester.h; sourceTree = "<group>"; };
 		63CAACD51C91D0D100216F8D /* NotificationTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTester.m; sourceTree = "<group>"; };
-		63CD4B4D1A5AAC8C00B84282 /* DTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTAlertView.h; sourceTree = "<group>"; };
-		63CD4B4E1A5AAC8C00B84282 /* DTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTAlertView.m; sourceTree = "<group>"; };
 		63CDC4531C3BDE370085F529 /* msg.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = msg.caf; sourceTree = "<group>"; };
 		63CDC4541C3BDE370085F529 /* ringback.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringback.wav; sourceTree = "<group>"; };
 		63CDC45C1C3BDE370085F529 /* shortring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shortring.caf; sourceTree = "<group>"; };
@@ -1806,8 +1802,6 @@
 		D37DC7171594AF3400B2A5EB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		D37E3ECB1619C27A0087659A /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+Blocks.h"; sourceTree = "<group>"; };
 		D37E3ECC1619C27A0087659A /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+Blocks.m"; sourceTree = "<group>"; };
-		D37EE160160377D7003608A6 /* DTActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTActionSheet.h; sourceTree = "<group>"; };
-		D37EE161160377D7003608A6 /* DTActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTActionSheet.m; sourceTree = "<group>"; };
 		D3807FB715C28940005BE9BC /* DCRoundSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitch.h; sourceTree = "<group>"; };
 		D3807FB815C28940005BE9BC /* DCRoundSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitch.m; sourceTree = "<group>"; };
 		D3807FB915C28940005BE9BC /* DCRoundSwitchKnobLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchKnobLayer.h; sourceTree = "<group>"; };
@@ -1882,7 +1876,6 @@
 		F03CA84218C72F1A0008889D /* UITextViewNoDefine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextViewNoDefine.m; sourceTree = "<group>"; };
 		F05BAA611A5D594E00411815 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F0642EF019DAC891009DB336 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		F0642EF719DAF32E009DB336 /* DTWeakSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTWeakSupport.h; sourceTree = "<group>"; };
 		F088488C19FF8C41007FFCF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UIContactCell.xib; sourceTree = "<group>"; };
 		F08F118419C09C6A007D70C2 /* liblinphoneTesterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = liblinphoneTesterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0938158188E629800A55DFA /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
@@ -3028,7 +3021,6 @@
 				D380801215C299D0005BE9BC /* ColorSpaceUtilites.m */,
 				D380801115C29984005BE9BC /* ColorSpaceUtilities.h */,
 				D3807FB615C28940005BE9BC /* DCRoundSwitch */,
-				D37EE15F160377D7003608A6 /* DTFoundation */,
 				D32B9DFA15A2F131000B6DEC /* FastAddressBook.h */,
 				D32B9DFB15A2F131000B6DEC /* FastAddressBook.m */,
 				6371579F1B283FE200C91677 /* FileTransferDelegate.h */,
@@ -3061,19 +3053,6 @@
 			);
 			name = CAAnimationBlocks;
 			path = Utils/CAAnimationBlocks;
-			sourceTree = "<group>";
-		};
-		D37EE15F160377D7003608A6 /* DTFoundation */ = {
-			isa = PBXGroup;
-			children = (
-				D37EE160160377D7003608A6 /* DTActionSheet.h */,
-				63CD4B4D1A5AAC8C00B84282 /* DTAlertView.h */,
-				63CD4B4E1A5AAC8C00B84282 /* DTAlertView.m */,
-				D37EE161160377D7003608A6 /* DTActionSheet.m */,
-				F0642EF719DAF32E009DB336 /* DTWeakSupport.h */,
-			);
-			name = DTFoundation;
-			path = Utils/DTFoundation;
 			sourceTree = "<group>";
 		};
 		D3807FB615C28940005BE9BC /* DCRoundSwitch */ = {
@@ -4078,7 +4057,6 @@
 				570742611D5A09B8004B9C84 /* ShopView.m in Sources */,
 				63F1DF4F1BCE985F00EDED90 /* UICallConferenceCell.m in Sources */,
 				D37DC6C11594AE1800B2A5EB /* LinphoneCoreSettingsStore.m in Sources */,
-				63CD4B4F1A5AAC8C00B84282 /* DTAlertView.m in Sources */,
 				D3EA53FD159850E80037DC6B /* LinphoneManager.m in Sources */,
 				63B81A0E1B57DA33009604A6 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				633888451BFB2C49001D5E7B /* HPGrowingTextView.m in Sources */,
@@ -4138,7 +4116,6 @@
 				D378AB2A15DCDB4A0098505D /* ImagePickerView.m in Sources */,
 				22405F001601C19200B92522 /* ImageView.m in Sources */,
 				63BC49E21BA2CDFC004EC273 /* UICallPausedCell.m in Sources */,
-				D37EE162160377D7003608A6 /* DTActionSheet.m in Sources */,
 				D306459E1611EC2A00BB571E /* UILoadingImageView.m in Sources */,
 				6381DA7D1C1AD5EA00DF3BBD /* UIBouncingView.m in Sources */,
 				D37E3ECD1619C27A0087659A /* CAAnimation+Blocks.m in Sources */,

@@ -135,7 +135,7 @@
 							   LOGI(@"Image saved to [%@]", [assetURL absoluteString]);
 						   }
 						   [LinphoneManager.instance lpConfigSetString:assetURL.absoluteString forKey:@"avatar"];
-						   _avatarImage.image = [LinphoneUtils selfAvatar];
+						   self.avatarImage.image = [LinphoneUtils selfAvatar];
 						 }];
 	} else {
 		[LinphoneManager.instance lpConfigSetString:url.absoluteString forKey:@"avatar"];

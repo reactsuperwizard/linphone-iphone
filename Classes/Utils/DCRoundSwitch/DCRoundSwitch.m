@@ -385,7 +385,7 @@
 			self.ignoreTap = NO;
 
 			// send the action here so it get's sent at the end of the animations
-			if (previousOn != on && !ignoreControlEvents)
+			if (previousOn != self->on && !ignoreControlEvents)
 				[self sendActionsForControlEvents:UIControlEventValueChanged];
 
 		}];

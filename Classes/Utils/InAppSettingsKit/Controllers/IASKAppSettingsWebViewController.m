@@ -56,12 +56,7 @@
 	[webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
-- (void)viewDidUnload {
-	[super viewDidUnload];
-	self.webView = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (BOOL)shouldAutorotate {
     return YES;
 }
 

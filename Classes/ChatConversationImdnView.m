@@ -81,8 +81,14 @@ static UICompositeViewDescription *compositeDescription = nil;
 									self.view.frame.size.height - (_msgView.frame.origin.y + _msgView.frame.size.height))];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[self fitContent];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+        [self fitContent];
+    }];
 }
 
 #pragma mark - TableView

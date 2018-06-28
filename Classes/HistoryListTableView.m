@@ -273,7 +273,7 @@
 
 - (void)removeSelectionUsing:(void (^)(NSIndexPath *))remover {
 	[super removeSelectionUsing:^(NSIndexPath *indexPath) {
-	  id log = [_sections objectForKey:_sortedDays[indexPath.section]][indexPath.row];
+	  id log = [self.sections objectForKey:self.sortedDays[indexPath.section]][indexPath.row];
 	  LinphoneCallLog *callLog = [log pointerValue];
 	  MSList *count = linphone_call_log_get_user_data(callLog);
 	  while (count) {
@@ -282,10 +282,10 @@
 	  }
 	  linphone_core_remove_call_log(LC, callLog);
 	  linphone_call_log_unref(callLog);
-	  [[_sections objectForKey:_sortedDays[indexPath.section]] removeObject:log];
-	  if (((NSArray *)[_sections objectForKey:_sortedDays[indexPath.section]]).count == 0) {
-		  [_sections removeObjectForKey:_sortedDays[indexPath.section]];
-		  [_sortedDays removeObjectAtIndex:indexPath.section];
+	  [[self.sections objectForKey:self.sortedDays[indexPath.section]] removeObject:log];
+	  if (((NSArray *)[self.sections objectForKey:self.sortedDays[indexPath.section]]).count == 0) {
+		  [self.sections removeObjectForKey:self.sortedDays[indexPath.section]];
+		  [self.sortedDays removeObjectAtIndex:indexPath.section];
 	  }
 	}];
 }

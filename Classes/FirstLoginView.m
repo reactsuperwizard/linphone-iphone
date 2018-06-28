@@ -88,9 +88,8 @@ static UICompositeViewDescription *compositeDescription = nil;
 		showError:[AssistantView
 					  errorForLinphoneAccountCreatorUsernameStatus:LinphoneAccountCreatorUsernameStatusInvalid]
 			 when:^BOOL(NSString *inputEntry) {
-			   LinphoneAccountCreatorUsernameStatus s =
-				   linphone_account_creator_set_username(account_creator, inputEntry.UTF8String);
-			   _usernameField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorUsernameStatus:s];
+			   LinphoneAccountCreatorUsernameStatus s = linphone_account_creator_set_username(self->account_creator, inputEntry.UTF8String);
+			   self.usernameField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorUsernameStatus:s];
 			   return s != LinphoneAccountCreatorUsernameStatusOk;
 			 }];
 
@@ -98,18 +97,16 @@ static UICompositeViewDescription *compositeDescription = nil;
 		showError:[AssistantView
 					  errorForLinphoneAccountCreatorPasswordStatus:LinphoneAccountCreatorPasswordStatusTooShort]
 			 when:^BOOL(NSString *inputEntry) {
-			   LinphoneAccountCreatorPasswordStatus s =
-				   linphone_account_creator_set_password(account_creator, inputEntry.UTF8String);
-			   _passwordField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorPasswordStatus:s];
+			   LinphoneAccountCreatorPasswordStatus s = linphone_account_creator_set_password(self->account_creator, inputEntry.UTF8String);
+			   self.passwordField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorPasswordStatus:s];
 			   return s != LinphoneAccountCreatorUsernameStatusOk;
 			 }];
 
 	[_domainField
 		showError:[AssistantView errorForLinphoneAccountCreatorDomainStatus:LinphoneAccountCreatorDomainInvalid]
 			 when:^BOOL(NSString *inputEntry) {
-			   LinphoneAccountCreatorDomainStatus s =
-				   linphone_account_creator_set_domain(account_creator, inputEntry.UTF8String);
-			   _domainField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorDomainStatus:s];
+			   LinphoneAccountCreatorDomainStatus s = linphone_account_creator_set_domain(self->account_creator, inputEntry.UTF8String);
+			   self.domainField.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorDomainStatus:s];
 			   return s != LinphoneAccountCreatorDomainOk;
 			 }];
 }
@@ -222,7 +219,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 		  linphone_core_set_provisioning_uri(LC, url.UTF8String);
 		  [LinphoneManager.instance resetLinphoneCore];
 	  } else {
-		  _waitView.hidden = YES;
+		  self.waitView.hidden = YES;
 	  }
 	};
 

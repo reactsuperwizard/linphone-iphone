@@ -698,8 +698,8 @@ static void linphone_iphone_display_status(struct _LinphoneCore *lc, const char 
 							incallBgTask =
 								[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
 								  LOGW(@"Call cannot ring any more, too late");
-								  [[UIApplication sharedApplication] endBackgroundTask:incallBgTask];
-								  incallBgTask = 0;
+								  [[UIApplication sharedApplication] endBackgroundTask:self->incallBgTask];
+								  self->incallBgTask = 0;
 								}];
 
 							if (data->timer) {
@@ -2149,7 +2149,7 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 - (void)startCallPausedLongRunningTask {
 	pausedCallBgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
 	  LOGW(@"Call cannot be paused any more, too late");
-	  [[UIApplication sharedApplication] endBackgroundTask:pausedCallBgTask];
+	  [[UIApplication sharedApplication] endBackgroundTask:self->pausedCallBgTask];
 	}];
 	LOGI(@"Long running task started, remaining [%@] because at least one call is paused",
 		 [LinphoneUtils intervalToString:[[UIApplication sharedApplication] backgroundTimeRemaining]]);
@@ -2188,8 +2188,8 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 		  for (NSString *key in [LinphoneManager.instance.pushDict allKeys]) {
 			  [LinphoneManager.instance.pushDict setValue:[NSNumber numberWithInt:0] forKey:key];
 		  }
-		  [[UIApplication sharedApplication] endBackgroundTask:pushBgTaskMsg];
-		  pushBgTaskMsg = 0;
+		  [[UIApplication sharedApplication] endBackgroundTask:self->pushBgTaskMsg];
+		  self->pushBgTaskMsg = 0;
 		}];
 		LOGI(@"Message long running task started for call-id [%@], remaining [%@] because a push has been received",
 			 callId, [LinphoneUtils intervalToString:[[UIApplication sharedApplication] backgroundTimeRemaining]]);
@@ -2219,8 +2219,8 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 		  for (NSString *key in [LinphoneManager.instance.pushDict allKeys]) {
 			  [LinphoneManager.instance.pushDict setValue:[NSNumber numberWithInt:0] forKey:key];
 		  }
-		  [[UIApplication sharedApplication] endBackgroundTask:pushBgTaskCall];
-		  pushBgTaskCall = 0;
+		  [[UIApplication sharedApplication] endBackgroundTask:self->pushBgTaskCall];
+		  self->pushBgTaskCall = 0;
 		}];
 		LOGI(@"Call long running task started for call-id [%@], remaining [%@] because a push has been received",
 			 callId, [LinphoneUtils intervalToString:[[UIApplication sharedApplication] backgroundTimeRemaining]]);
@@ -2236,8 +2236,8 @@ static int comp_call_state_paused(const LinphoneCall *call, const void *param) {
 			for (NSString *key in [LinphoneManager.instance.pushDict allKeys]) {
 				[LinphoneManager.instance.pushDict setValue:[NSNumber numberWithInt:0] forKey:key];
 			}
-			[[UIApplication sharedApplication] endBackgroundTask:pushBgTaskRefer];
-			pushBgTaskRefer = 0;
+			[[UIApplication sharedApplication] endBackgroundTask:self->pushBgTaskRefer];
+			self->pushBgTaskRefer = 0;
 		}];
 		LOGI(@"Refer long running task started for call-id [%@], remaining [%@] because a push has been received",
 			 callId, [LinphoneUtils intervalToString:[[UIApplication sharedApplication] backgroundTimeRemaining]]);

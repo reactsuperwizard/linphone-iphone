@@ -47,8 +47,14 @@
 	[NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[self update:FALSE];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+        [self update:FALSE];
+    }];
 }
 
 #pragma mark - Event Functions
@@ -136,8 +142,7 @@
 	CGFloat delay = ANIMATED ? 0.3 : 0;
 	[UIView animateWithDuration:delay
 					 animations:^{
-					   _selectedButtonImage.frame = selectedNewFrame;
-
+					   self.selectedButtonImage.frame = selectedNewFrame;
 					 }];
 }
 

@@ -34,7 +34,7 @@
 						 [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x,
 															 y,
 															 self.tableView.frame.size.width,
-															 _waitView.frame.size.height - _waitView.frame.origin.y - y)];
+															 self.waitView.frame.size.height - self.waitView.frame.origin.y - y)];
 						 }
 					 completion:nil];
 
@@ -172,7 +172,7 @@
 							options:UIViewAnimationOptionCurveEaseOut
 						 animations:^{
 							 [tableView setFrame:CGRectMake(tableView.frame.origin.x,
-															_collectionView.frame.origin.y + _collectionView.frame.size.height,
+															self.collectionView.frame.origin.y + self.collectionView.frame.size.height,
 															tableView.frame.size.width,
 															tableView.frame.size.height)];
 
@@ -184,9 +184,9 @@
 							options:UIViewAnimationOptionCurveEaseOut
 						 animations:^{
 							 [tableView setFrame:CGRectMake(tableView.frame.origin.x,
-															_collectionView.frame.origin.y + _collectionView.frame.size.height,
+															self.collectionView.frame.origin.y + self.collectionView.frame.size.height,
 															tableView.frame.size.width,
-															tableView.frame.size.height - _collectionView.frame.size.height)];
+															tableView.frame.size.height - self.collectionView.frame.size.height)];
 
 						 }
 						 completion:nil];
@@ -196,9 +196,9 @@
 							options:UIViewAnimationOptionCurveEaseOut
 						 animations:^{
 							 [tableView setFrame:CGRectMake(tableView.frame.origin.x,
-															_searchBar.frame.origin.y + _searchBar.frame.size.height,
+															self.searchBar.frame.origin.y + self.searchBar.frame.size.height,
 															tableView.frame.size.width,
-															tableView.frame.size.height + _collectionView.frame.size.height)];
+															tableView.frame.size.height + self.collectionView.frame.size.height)];
 						 }
 						 completion:nil];
 	}
@@ -210,7 +210,7 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if(index > 0) {
 			NSIndexPath *path = [NSIndexPath indexPathForItem:index inSection:0];
-			[_collectionView scrollToItemAtIndexPath:path
+			[self.collectionView scrollToItemAtIndexPath:path
 									atScrollPosition:(UICollectionViewScrollPositionCenteredHorizontally | UICollectionViewScrollPositionCenteredVertically)
 											animated:YES];
 		}

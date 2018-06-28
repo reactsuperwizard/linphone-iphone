@@ -93,7 +93,7 @@
 }
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (BOOL)shouldAutorotate {
 	return YES;
 }
 
@@ -174,7 +174,7 @@
                                                                                            forKey:[_currentSpecifier key]]];
 }
 
-- (CGSize)contentSizeForViewInPopover {
+- (CGSize)preferredCcontent {
     return [[self view] sizeThatFits:CGSizeMake(320, 2000)];
 }
 

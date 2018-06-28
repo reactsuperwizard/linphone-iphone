@@ -254,32 +254,18 @@ static RootViewManager *rootViewManagerInstance = nil;
 	return UIInterfaceOrientationMaskAll;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-								duration:(NSTimeInterval)duration {
-	if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-		return;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [mainViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+        UIDeviceOrientation toOrientation = UIDevice.currentDevice.orientation;
+        if (toOrientation == UIDeviceOrientationPortraitUpsideDown)
+            return;
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
 
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[mainViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self orientationUpdate:toInterfaceOrientation];
-}
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-										 duration:(NSTimeInterval)duration {
-	if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-		return;
-
-	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[mainViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[mainViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
-- (UIInterfaceOrientation)interfaceOrientation {
-	return [mainViewController currentOrientation];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -632,7 +618,7 @@ static RootViewManager *rootViewManagerInstance = nil;
 
 			[UIView animateWithDuration:0.3f
 							 animations:^{
-							   statusBarBG.backgroundColor = [UIColor blackColor];
+							   self->statusBarBG.backgroundColor = [UIColor blackColor];
 							 }];
 
 		} else {
@@ -640,7 +626,7 @@ static RootViewManager *rootViewManagerInstance = nil;
 			[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 			[UIView animateWithDuration:0.3f
 							 animations:^{
-							   statusBarBG.backgroundColor = [UIColor colorWithWhite:0.935 alpha:1];
+							   self->statusBarBG.backgroundColor = [UIColor colorWithWhite:0.935 alpha:1];
 							 }];
 		}
 	}
@@ -810,7 +796,7 @@ static RootViewManager *rootViewManagerInstance = nil;
 }
 
 - (void)batteryLevelChanged:(NSNotification *)notif {
-	float level = [UIDevice currentDevice].batteryLevel;
+	/*float level = [UIDevice currentDevice].batteryLevel;
 	UIDeviceBatteryState state = [UIDevice currentDevice].batteryState;
 	LOGD(@"Battery state:%d level:%.2f", state, level);
 
@@ -841,7 +827,7 @@ static RootViewManager *rootViewManagerInstance = nil;
 				callData->batteryWarningShown = FALSE;
 			}
 		}
-	}
+	}*/
 }
 
 #pragma mark - IncomingCallDelegate Functions

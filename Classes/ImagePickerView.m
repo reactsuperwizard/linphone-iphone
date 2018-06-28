@@ -175,9 +175,8 @@ static UICompositeViewDescription *compositeDescription = nil;
 	[self dismiss];
 }
 
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)apopoverController {
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverController *)apopoverController {
 	[self dismiss];
-	return TRUE;
 }
 
 - (void)navigationController:(UINavigationController *)navigationController
@@ -194,7 +193,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 + (void)SelectImageFromDevice:(id<ImagePickerDelegate>)delegate
 				   atPosition:(UIView *)ipadPopoverView
 					   inView:(UIView *)ipadView {
-	void (^block)(UIImagePickerControllerSourceType) = ^(UIImagePickerControllerSourceType type) {
+	/*void (^block)(UIImagePickerControllerSourceType) = ^(UIImagePickerControllerSourceType type) {
 	  ImagePickerView *view = VIEW(ImagePickerView);
 	  view.sourceType = type;
 
@@ -251,7 +250,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 	}
 	[sheet addCancelButtonWithTitle:NSLocalizedString(@"Cancel", nil) block:nil];
 
-	[sheet showInView:PhoneMainView.instance.view];
+	[sheet showInView:PhoneMainView.instance.view];*/
 }
 
 @end

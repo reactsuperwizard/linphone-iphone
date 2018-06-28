@@ -38,7 +38,6 @@
 #import "ContactDetailsView.h"
 #import "ContactsListView.h"
 #import "CountryListView.h"
-#import "DTActionSheet.h"
 #import "DialerView.h"
 #import "FirstLoginView.h"
 #import "HistoryDetailsView.h"

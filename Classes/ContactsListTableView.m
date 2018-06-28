@@ -432,12 +432,12 @@ static int ms_strcmpfuz(const char *fuzzy_word, const char *sentence) {
 	[super removeSelectionUsing:^(NSIndexPath *indexPath) {
 	  [NSNotificationCenter.defaultCenter removeObserver:self];
 
-	  NSString *firstChar = [addressBookMap keyAtIndex:[indexPath section]];
-	  NSMutableArray *subAr = [addressBookMap objectForKey:firstChar];
+	  NSString *firstChar = [self->addressBookMap keyAtIndex:[indexPath section]];
+	  NSMutableArray *subAr = [self->addressBookMap objectForKey:firstChar];
 	  Contact *contact = subAr[indexPath.row];
 	  [subAr removeObjectAtIndex:indexPath.row];
 	  if (subAr.count == 0) {
-		  [addressBookMap removeObjectForKey:firstChar];
+		  [self->addressBookMap removeObjectForKey:firstChar];
 	  }
 	  UIContactCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
 	  [cell setContact:NULL];

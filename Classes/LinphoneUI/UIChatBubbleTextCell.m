@@ -239,7 +239,7 @@
 			  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL),
 							 ^(void) {
 								UIImage *image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-								[_chatRoomDelegate startImageUpload:image url:imageUrl withQuality:(uploadQuality ? [uploadQuality floatValue] : 0.9)];
+								[self.chatRoomDelegate startImageUpload:image url:imageUrl withQuality:(uploadQuality ? [uploadQuality floatValue] : 0.9)];
 							 });
 			}
 			failureBlock:^(NSError *error) {
@@ -250,7 +250,7 @@
 		double delayInSeconds = 0.4;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-		  [_chatRoomDelegate resendChat:self.textMessage withExternalUrl:nil];
+		  [self.chatRoomDelegate resendChat:self.textMessage withExternalUrl:nil];
 		});
 	}
 }

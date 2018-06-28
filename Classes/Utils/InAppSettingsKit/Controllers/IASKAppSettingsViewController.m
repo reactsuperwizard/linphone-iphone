@@ -167,15 +167,6 @@ CGRect IASKCGRectSwap(CGRect rect);
     [self.tableView addGestureRecognizer:tapGesture];
 }
 
-- (void)viewDidUnload {
-  [super viewDidUnload];
-
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-	self.view = nil;
-	self.viewList = nil;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	// if there's something selected, the value might have changed
 	// so reload that row
@@ -214,7 +205,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 	[super viewWillAppear:animated];
 }
 
-- (CGSize)contentSizeForViewInPopover {
+- (CGSize)preferredContentSize {
     return [[self view] sizeThatFits:CGSizeMake(320, 2000)];
 }
 
@@ -242,7 +233,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (BOOL)shouldAutorotate {
     return YES;
 }
 

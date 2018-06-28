@@ -229,11 +229,16 @@ static UICompositeViewDescription *compositeDescription = nil;
 	}
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self updateUnreadMessage:NO];
-	[self previewTouchLift];
-	[self hideStatusBar:!videoHidden && (_nameLabel.alpha <= 0.f)];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+        [self updateUnreadMessage:NO];
+        [self previewTouchLift];
+        [self hideStatusBar:!self->videoHidden && (self.nameLabel.alpha <= 0.f)];
+    }];
 }
 
 #pragma mark - UI modification
@@ -637,8 +642,8 @@ static void hideSpinner(LinphoneCall *call, void *user_data) {
 				  LinphoneCallParams *params = linphone_core_create_call_params(LC, call);
 				  linphone_call_accept_update(call, params);
 				  linphone_call_params_destroy(params);
-				  [videoDismissTimer invalidate];
-				  videoDismissTimer = nil;
+				  [self->videoDismissTimer invalidate];
+				  self->videoDismissTimer = nil;
 			  }
 			}
 			onConfirmationClick:^() {
@@ -648,8 +653,8 @@ static void hideSpinner(LinphoneCall *call, void *user_data) {
 				  linphone_call_params_enable_video(params, TRUE);
 				  linphone_call_accept_update(call, params);
 				  linphone_call_params_destroy(params);
-				  [videoDismissTimer invalidate];
-				  videoDismissTimer = nil;
+				  [self->videoDismissTimer invalidate];
+				  self->videoDismissTimer = nil;
 			  }
 			}
 			inController:self];
@@ -694,7 +699,7 @@ static void hideSpinner(LinphoneCall *call, void *user_data) {
 		  [UIView animateWithDuration:0.3
 						   animations:^{
 							 LOGD(@"Recentering preview to %@", NSStringFromCGRect(previewFrame));
-							 _videoPreview.frame = previewFrame;
+							 self.videoPreview.frame = previewFrame;
 						   }];
 		});
 	}

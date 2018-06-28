@@ -225,7 +225,7 @@ void deletion_chat_room_state_changed(LinphoneChatRoom *cr, LinphoneChatRoomStat
 							   confirmMessage:nil
 								onCancelClick:^() {}
 						  onConfirmationClick:^() {
-							  _chatRooms = bctbx_list_new((void *)chatRoom);
+							  self.chatRooms = bctbx_list_new((void *)chatRoom);
 							  [self deleteChatRooms];
 						  }];
 	}

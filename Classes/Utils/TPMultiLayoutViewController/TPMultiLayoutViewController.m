@@ -44,28 +44,25 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // Display correct layout for orientation
-    /*if ( (UIInterfaceOrientationIsPortrait(self.interfaceOrientation) && !viewIsCurrentlyPortrait) ||
-         (UIInterfaceOrientationIsLandscape(self.interfaceOrientation) && viewIsCurrentlyPortrait) ) {
-        [self applyLayoutForInterfaceOrientation:self.interfaceOrientation];
-    }*/
     [super viewWillAppear:animated];
 }
 
 #pragma mark - Rotation
 
-- (void)applyLayoutForInterfaceOrientation:(UIInterfaceOrientation)newOrientation {
-    NSDictionary *table = UIInterfaceOrientationIsPortrait(newOrientation) ? portraitAttributes : landscapeAttributes;
+- (void)applyLayoutForInterfaceOrientation:(UIDeviceOrientation)newOrientation {
+    NSDictionary *table = UIDeviceOrientationIsPortrait(newOrientation) ? portraitAttributes : landscapeAttributes;
     [self applyAttributeTable:table toViewHierarchy:self.view];
-    viewIsCurrentlyPortrait = UIInterfaceOrientationIsPortrait(newOrientation);
+    viewIsCurrentlyPortrait = UIDeviceOrientationIsPortrait(newOrientation);
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    //if ( (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) && !viewIsCurrentlyPortrait) ||
-    //     (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && viewIsCurrentlyPortrait) ) {
-        [self applyLayoutForInterfaceOrientation:toInterfaceOrientation];
-    //}
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+        [self applyLayoutForInterfaceOrientation:UIDevice.currentDevice.orientation];
+    }];
 }
 
 #pragma mark - Helpers

@@ -136,8 +136,14 @@ static UICompositeViewDescription *compositeDescription = nil;
 	[_contentView contentSizeToFit];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[self fitContent];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+        [self fitContent];
+    }];
 }
 
 #pragma mark - Utils
@@ -651,9 +657,9 @@ static UICompositeViewDescription *compositeDescription = nil;
 					  errorForLinphoneAccountCreatorUsernameStatus:LinphoneAccountCreatorUsernameStatusInvalid]
 			 when:^BOOL(NSString *inputEntry) {
 			   LinphoneAccountCreatorUsernameStatus s =
-				   linphone_account_creator_set_username(account_creator, inputEntry.UTF8String);
+				   linphone_account_creator_set_username(self->account_creator, inputEntry.UTF8String);
 			   if (s != LinphoneAccountCreatorUsernameStatusOk)
-				   linphone_account_creator_set_username(account_creator, NULL);
+				   linphone_account_creator_set_username(self->account_creator, NULL);
 			   createUsername.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorUsernameStatus:s];
 			   return s != LinphoneAccountCreatorUsernameStatusOk;
 			 }];
@@ -667,12 +673,14 @@ static UICompositeViewDescription *compositeDescription = nil;
 			   NSString *newStr =
 				   [countryCodeField.text substringWithRange:NSMakeRange(1, [countryCodeField.text length] - 1)];
 			   NSString *prefix = (inputEntry.length > 0) ? newStr : nil;
-			   LinphoneAccountCreatorPhoneNumberStatus s = linphone_account_creator_set_phone_number(
-				   account_creator, inputEntry.length > 0 ? inputEntry.UTF8String : NULL, prefix.UTF8String);
+			   LinphoneAccountCreatorPhoneNumberStatus s = linphone_account_creator_set_phone_number(self->account_creator,
+                                                                                                     inputEntry.length > 0
+                                                                                                        ? inputEntry.UTF8String
+                                                                                                        : NULL, prefix.UTF8String);
 			   if (s != LinphoneAccountCreatorPhoneNumberStatusOk) {
-				   linphone_account_creator_set_phone_number(account_creator, NULL, NULL);
+				   linphone_account_creator_set_phone_number(self->account_creator, NULL, NULL);
 				   // if phone is empty and username is empty, this is wrong
-				   if (linphone_account_creator_get_username(account_creator) == NULL) {
+				   if (linphone_account_creator_get_username(self->account_creator) == NULL) {
 					   s = LinphoneAccountCreatorPhoneNumberStatusTooShort;
 				   }
 			   }
@@ -686,8 +694,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 	[password showError:[AssistantView
 							errorForLinphoneAccountCreatorPasswordStatus:LinphoneAccountCreatorPasswordStatusTooShort]
 				   when:^BOOL(NSString *inputEntry) {
-					 LinphoneAccountCreatorPasswordStatus s =
-						 linphone_account_creator_set_password(account_creator, inputEntry.UTF8String);
+					 LinphoneAccountCreatorPasswordStatus s = linphone_account_creator_set_password(self->account_creator, inputEntry.UTF8String);
 					 password.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorPasswordStatus:s];
 					 return s != LinphoneAccountCreatorPasswordStatusOk;
 				   }];
@@ -702,8 +709,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 	[email
 		showError:[AssistantView errorForLinphoneAccountCreatorEmailStatus:LinphoneAccountCreatorEmailStatusMalformed]
 			 when:^BOOL(NSString *inputEntry) {
-			   LinphoneAccountCreatorEmailStatus s =
-				   linphone_account_creator_set_email(account_creator, inputEntry.UTF8String);
+			   LinphoneAccountCreatorEmailStatus s = linphone_account_creator_set_email(self->account_creator, inputEntry.UTF8String);
 			   email.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorEmailStatus:s];
 			   return s != LinphoneAccountCreatorEmailStatusOk;
 			 }];
@@ -712,8 +718,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 	[domain showError:[AssistantView errorForLinphoneAccountCreatorDomainStatus:LinphoneAccountCreatorDomainInvalid]
 				 when:^BOOL(NSString *inputEntry) {
 				   if (![inputEntry isEqualToString:@""]) {
-					   LinphoneAccountCreatorDomainStatus s =
-						   linphone_account_creator_set_domain(account_creator, inputEntry.UTF8String);
+					   LinphoneAccountCreatorDomainStatus s = linphone_account_creator_set_domain(self->account_creator, inputEntry.UTF8String);
 					   domain.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorDomainStatus:s];
 					   return s != LinphoneAccountCreatorDomainOk;
 				   }
@@ -739,9 +744,8 @@ static UICompositeViewDescription *compositeDescription = nil;
 					  when:^BOOL(NSString *inputEntry) {
 						LinphoneAccountCreatorUsernameStatus s = LinphoneAccountCreatorUsernameStatusOk;
 						if (inputEntry.length > 0) {
-							s = linphone_account_creator_set_display_name(account_creator, inputEntry.UTF8String);
-							displayName.errorLabel.text =
-								[AssistantView errorForLinphoneAccountCreatorUsernameStatus:s];
+							s = linphone_account_creator_set_display_name(self->account_creator, inputEntry.UTF8String);
+							displayName.errorLabel.text = [AssistantView errorForLinphoneAccountCreatorUsernameStatus:s];
 						}
 						return s != LinphoneAccountCreatorUsernameStatusOk;
 					  }];
@@ -940,8 +944,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 			actionWithTitle:@"OK"
 					  style:UIAlertActionStyleDefault
 					handler:^(UIAlertAction *action) {
-					  NSString *tmp_phone =
-						  [NSString stringWithUTF8String:linphone_account_creator_get_phone_number(account_creator)];
+					  NSString *tmp_phone = [NSString stringWithUTF8String:linphone_account_creator_get_phone_number(self->account_creator)];
 					  int ccc = -1;
 					  const LinphoneDialPlan *dialplan = NULL;
 					  char *nationnal_significant_number = NULL;
@@ -953,33 +956,29 @@ static UICompositeViewDescription *compositeDescription = nil;
 							  nationnal_significant_number += strlen(linphone_dial_plan_get_country_calling_code(dialplan));
 						  }
 					  }
-					  [self changeView:_linphoneLoginView back:FALSE animation:TRUE];
+					  [self changeView:self.linphoneLoginView back:FALSE animation:TRUE];
 					  UISwitch *usernameSwitch = (UISwitch *)[self findView:ViewElement_UsernameFormView
 																	 inView:self.contentView
 																	 ofType:UISwitch.class];
 					  [usernameSwitch setOn:FALSE];
-					  UIView *usernameView =
-						  [self findView:ViewElement_UsernameFormView inView:self.contentView ofType:UIView.class];
+					  UIView *usernameView = [self findView:ViewElement_UsernameFormView inView:self.contentView ofType:UIView.class];
 					  usernameView.hidden = !usernameSwitch.isOn;
 					  if (nationnal_significant_number) {
 						  ((UITextField *)[self findView:ViewElement_Phone
-												  inView:_linphoneLoginView
-												  ofType:[UIAssistantTextField class]])
-							  .text = [NSString stringWithUTF8String:nationnal_significant_number];
+												  inView:self.linphoneLoginView
+												  ofType:[UIAssistantTextField class]]).text = [NSString stringWithUTF8String:nationnal_significant_number];
 					  }
 					  ((UITextField *)[self findView:ViewElement_SMSCode
-											  inView:_createAccountActivateSMSView
-											  ofType:[UITextField class]])
-						  .text = @"";
-					  linphone_account_creator_set_activation_code(account_creator, "");
+											  inView:self.createAccountActivateSMSView
+											  ofType:[UITextField class]]).text = @"";
+					  linphone_account_creator_set_activation_code(self->account_creator, "");
 					  if (linphone_dial_plan_get_iso_country_code(dialplan)) {
-						  NSDictionary *country = [CountryListView
-							  countryWithIso:[NSString stringWithUTF8String:linphone_dial_plan_get_iso_country_code(dialplan)]];
+						  NSDictionary *country = [CountryListView countryWithIso:[NSString stringWithUTF8String:linphone_dial_plan_get_iso_country_code(dialplan)]];
 						  [self didSelectCountry:country];
 					  }
 					  // Reset phone number in account_creator to be sure to let the user retry
 					  if (nationnal_significant_number) {
-						  linphone_account_creator_set_phone_number(account_creator, nationnal_significant_number,
+						  linphone_account_creator_set_phone_number(self->account_creator, nationnal_significant_number,
 																	linphone_dial_plan_get_country_calling_code(dialplan));
 					  }
 					}];
@@ -1211,41 +1210,41 @@ void assistant_is_account_linked(LinphoneAccountCreator *creator, LinphoneAccoun
 // Change button color and wait the display of this
 #define ONCLICKBUTTON(button, timewaitmsec, body) \
 [button setBackgroundColor:[UIColor lightGrayColor]]; \
-    _waitView.hidden = NO; \
+    self.waitView.hidden = NO; \
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (timewaitmsec * NSEC_PER_MSEC)); \
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){ \
         body \
         [button setBackgroundColor:[UIColor clearColor]]; \
-        _waitView.hidden = YES; \
+        self.waitView.hidden = YES; \
     }); \
 
 #pragma mark - Action Functions
 
 - (IBAction)onGotoCreateAccountClick:(id)sender {
     ONCLICKBUTTON(sender, 100, {
-		nextView = _createAccountView;
-		_accountLabel.text = NSLocalizedString(@"Please enter your phone number", nil);
+		self->nextView = self.createAccountView;
+		self.accountLabel.text = NSLocalizedString(@"Please enter your phone number", nil);
         [self loadAssistantConfig:@"assistant_linphone_create.rc"];
     });
 }
 
 - (IBAction)onGotoLinphoneLoginClick:(id)sender {
     ONCLICKBUTTON(sender, 100, {
-        nextView = _linphoneLoginView;
+        self->nextView = self.linphoneLoginView;
         [self loadAssistantConfig:@"assistant_linphone_existing.rc"];
     });
 }
 
 - (IBAction)onGotoLoginClick:(id)sender {
     ONCLICKBUTTON(sender, 100, {
-        nextView = _loginView;
+        self->nextView = self.loginView;
         [self loadAssistantConfig:@"assistant_external_sip.rc"];
     });
 }
 
 - (IBAction)onGotoRemoteProvisioningClick:(id)sender {
     ONCLICKBUTTON(sender, 100, {
-        nextView = _remoteProvisioningView;
+        self->nextView = self.remoteProvisioningView;
         [self loadAssistantConfig:@"assistant_remote.rc"];
         [self findTextField:ViewElement_URL].text =
         [LinphoneManager.instance lpConfigStringForKey:@"config-uri" inSection:@"misc"];
@@ -1255,70 +1254,69 @@ void assistant_is_account_linked(LinphoneAccountCreator *creator, LinphoneAccoun
 - (IBAction)onCreateAccountClick:(id)sender {
 	if ([self checkFields]) {
 		ONCLICKBUTTON(sender, 100, {
-			_activationTitle.text = @"CREATE ACCOUNT";
-			_waitView.hidden = NO;
-			linphone_account_creator_is_account_exist(account_creator);
+			self.activationTitle.text = @"CREATE ACCOUNT";
+			self.waitView.hidden = NO;
+			linphone_account_creator_is_account_exist(self->account_creator);
 		});
 	}
 }
 
 - (IBAction)onCreateAccountActivationClick:(id)sender {
     ONCLICKBUTTON(sender, 100, {
-        _waitView.hidden = NO;
+        self.waitView.hidden = NO;
 		linphone_account_creator_set_activation_code(
-			account_creator,
-			((UITextField *)[self findView:ViewElement_SMSCode inView:_contentView ofType:UITextField.class])
-				.text.UTF8String);
-		if (linphone_account_creator_get_password(account_creator) == NULL &&
-				linphone_account_creator_get_ha1(account_creator) == NULL) {
-				linphone_account_creator_activate_account(account_creator);
+			self->account_creator,
+			((UITextField *)[self findView:ViewElement_SMSCode inView:self.contentView ofType:UITextField.class]).text.UTF8String);
+		if (linphone_account_creator_get_password(self->account_creator) == NULL &&
+				linphone_account_creator_get_ha1(self->account_creator) == NULL) {
+				linphone_account_creator_activate_account(self->account_creator);
 		} else {
 			NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-			linphone_account_creator_set_language(account_creator, [[language substringToIndex:2] UTF8String]);
-			linphone_account_creator_link_account(account_creator);
-			linphone_account_creator_activate_alias(account_creator);
+			linphone_account_creator_set_language(self->account_creator, [[language substringToIndex:2] UTF8String]);
+			linphone_account_creator_link_account(self->account_creator);
+			linphone_account_creator_activate_alias(self->account_creator);
 		}
     });
 }
 
 - (IBAction)onCreateAccountCheckActivatedClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-        _waitView.hidden = NO;
-		linphone_account_creator_is_account_activated(account_creator);
+        self.waitView.hidden = NO;
+		linphone_account_creator_is_account_activated(self->account_creator);
     });
 }
 
 - (IBAction)onLinkAccountClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-		_waitView.hidden = NO;
+		self.waitView.hidden = NO;
 		NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-		linphone_account_creator_set_language(account_creator, [[language substringToIndex:2] UTF8String]);
-		linphone_account_creator_link_account(account_creator);
+		linphone_account_creator_set_language(self->account_creator, [[language substringToIndex:2] UTF8String]);
+		linphone_account_creator_link_account(self->account_creator);
 	});
 }
 
 - (IBAction)onLinphoneLoginClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-        _waitView.hidden = NO;
-		((UITextField *)[self findView:ViewElement_SMSCode inView:_contentView ofType:UITextField.class]).text = @"";
-		_activationTitle.text = @"USE LINPHONE ACCOUNT";
-		if ((linphone_account_creator_get_phone_number(account_creator) != NULL) &&
-			linphone_account_creator_get_password(account_creator) == NULL &&
-			linphone_account_creator_get_ha1(account_creator) == NULL) {
+        self.waitView.hidden = NO;
+		((UITextField *)[self findView:ViewElement_SMSCode inView:self.contentView ofType:UITextField.class]).text = @"";
+		self.activationTitle.text = @"USE LINPHONE ACCOUNT";
+		if ((linphone_account_creator_get_phone_number(self->account_creator) != NULL) &&
+			linphone_account_creator_get_password(self->account_creator) == NULL &&
+			linphone_account_creator_get_ha1(self->account_creator) == NULL) {
 			NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
-			linphone_account_creator_set_language(account_creator, [[language substringToIndex:2] UTF8String]);
-			linphone_account_creator_recover_account(account_creator);
+			linphone_account_creator_set_language(self->account_creator, [[language substringToIndex:2] UTF8String]);
+			linphone_account_creator_recover_account(self->account_creator);
 		} else {
 			// check if account is already linked with a phone number.
 			// if not, propose it to the user
-			linphone_account_creator_is_account_exist(account_creator);
+			linphone_account_creator_is_account_exist(self->account_creator);
 		}
     });
 }
 
 - (IBAction)onLoginClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-		_waitView.hidden = NO;
+		self.waitView.hidden = NO;
 		NSString *domain = [self findTextField:ViewElement_Domain].text;
 		NSString *username = [self findTextField:ViewElement_Username].text;
 		NSString *displayName = [self findTextField:ViewElement_DisplayName].text;
@@ -1383,7 +1381,7 @@ void assistant_is_account_linked(LinphoneAccountCreator *creator, LinphoneAccoun
 
 - (IBAction)onRemoteProvisioningLoginClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-        _waitView.hidden = NO;
+        self.waitView.hidden = NO;
         [LinphoneManager.instance lpConfigSetInt:1 forKey:@"transient_provisioning" inSection:@"misc"];
         [self configureProxyConfig];
     });
@@ -1391,7 +1389,7 @@ void assistant_is_account_linked(LinphoneAccountCreator *creator, LinphoneAccoun
 
 - (IBAction)onRemoteProvisioningDownloadClick:(id)sender {
 	ONCLICKBUTTON(sender, 100, {
-        [_waitView setHidden:false];
+        [self.waitView setHidden:false];
 		[self resetLiblinphone:TRUE];
     });
 }

@@ -146,36 +146,41 @@ static UICompositeViewDescription *compositeDescription = nil;
 	}
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-										 duration:(NSTimeInterval)duration {
-	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	switch (toInterfaceOrientation) {
-		case UIInterfaceOrientationPortrait:
-			[_videoPreview setTransform:CGAffineTransformMakeRotation(0)];
-			break;
-		case UIInterfaceOrientationPortraitUpsideDown:
-			[_videoPreview setTransform:CGAffineTransformMakeRotation(M_PI)];
-			break;
-		case UIInterfaceOrientationLandscapeLeft:
-			[_videoPreview setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
-			break;
-		case UIInterfaceOrientationLandscapeRight:
-			[_videoPreview setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-			break;
-		default:
-			break;
-	}
-	CGRect frame = self.view.frame;
-	frame.origin = CGPointMake(0, 0);
-	_videoPreview.frame = frame;
-	_padView.hidden = !IPAD && UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-	if (linphone_core_get_calls_nb(LC)) {
-		_backButton.hidden = FALSE;
-		_addContactButton.hidden = TRUE;
-	} else {
-		_backButton.hidden = TRUE;
-		_addContactButton.hidden = FALSE;
-	}
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in willRotateToInterfaceOrientation would go here.
+        UIDeviceOrientation toOrientation = UIDevice.currentDevice.orientation;
+        switch (toOrientation) {
+            case UIDeviceOrientationPortrait:
+                [self.videoPreview setTransform:CGAffineTransformMakeRotation(0)];
+                break;
+            case UIDeviceOrientationPortraitUpsideDown:
+                [self.videoPreview setTransform:CGAffineTransformMakeRotation(M_PI)];
+                break;
+            case UIDeviceOrientationLandscapeRight:
+                [self.videoPreview setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
+                break;
+            case UIDeviceOrientationLandscapeLeft:
+                [self.videoPreview setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+                break;
+            default:
+                break;
+        }
+        CGRect frame = self.view.frame;
+        frame.origin = CGPointMake(0, 0);
+        self.videoPreview.frame = frame;
+        self.padView.hidden = !IPAD && UIDeviceOrientationIsLandscape(toOrientation);
+        if (linphone_core_get_calls_nb(LC)) {
+            self.backButton.hidden = FALSE;
+            self.addContactButton.hidden = TRUE;
+        } else {
+            self.backButton.hidden = TRUE;
+            self.addContactButton.hidden = FALSE;
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        // Stuff you used to do in didRotateFromInterfaceOrientation would go here.
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

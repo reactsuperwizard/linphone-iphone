@@ -37,10 +37,10 @@
 							  delay:0
 							options:UIViewAnimationOptionCurveEaseOut
 						 animations:^{
-							 [_controller.tableController.tableView setFrame:CGRectMake(_controller.tableController.tableView.frame.origin.x,
-															_controller.tableController.searchBar.frame.origin.y + _controller.tableController.searchBar.frame.size.height,
-															_controller.tableController.tableView.frame.size.width,
-															_controller.tableController.tableView.frame.size.height + _controller.collectionView.frame.size.height)];
+							 [self.controller.tableController.tableView setFrame:CGRectMake(self.controller.tableController.tableView.frame.origin.x,
+															self.controller.tableController.searchBar.frame.origin.y + self.controller.tableController.searchBar.frame.size.height,
+															self.controller.tableController.tableView.frame.size.width,
+															self.controller.tableController.tableView.frame.size.height + self.controller.collectionView.frame.size.height)];
 						 }
 						 completion:nil];
 	}

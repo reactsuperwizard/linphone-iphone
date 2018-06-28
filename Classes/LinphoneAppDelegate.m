@@ -256,7 +256,7 @@
 	}
 	bgStartId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
 	  LOGW(@"Background task for application launching expired.");
-	  [[UIApplication sharedApplication] endBackgroundTask:bgStartId];
+	  [[UIApplication sharedApplication] endBackgroundTask:self->bgStartId];
 	}];
 
 	[LinphoneManager.instance startLinphoneCore];
@@ -308,41 +308,41 @@
 	[LinphoneManager.instance destroyLinphoneCore];
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	NSString *scheme = [[url scheme] lowercaseString];
-	if ([scheme isEqualToString:@"linphone-config"] || [scheme isEqualToString:@"linphone-config"]) {
-		NSString *encodedURL =
-			[[url absoluteString] stringByReplacingOccurrencesOfString:@"linphone-config://" withString:@""];
-		self.configURL = [encodedURL stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		UIAlertController *errView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Remote configuration", nil)
-																		 message:NSLocalizedString(@"This operation will load a remote configuration. Continue ?", nil)
-																  preferredStyle:UIAlertControllerStyleAlert];
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    NSString *scheme = [[url scheme] lowercaseString];
+    if ([scheme isEqualToString:@"linphone-config"] || [scheme isEqualToString:@"linphone-config"]) {
+        NSString *encodedURL =
+        [[url absoluteString] stringByReplacingOccurrencesOfString:@"linphone-config://" withString:@""];
+        self.configURL = [encodedURL stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        UIAlertController *errView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Remote configuration", nil)
+                                                                         message:NSLocalizedString(@"This operation will load a remote configuration. Continue ?", nil)
+                                                                  preferredStyle:UIAlertControllerStyleAlert];
 
-		UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"No", nil)
-																style:UIAlertActionStyleDefault
-															  handler:^(UIAlertAction * action) {}];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"No", nil)
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
 
-		UIAlertAction* yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil)
-																style:UIAlertActionStyleDefault
-														  handler:^(UIAlertAction * action) {
-															  [self showWaitingIndicator];
-															  [self attemptRemoteConfiguration];
-														  }];
+        UIAlertAction* yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil)
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [self showWaitingIndicator];
+                                                              [self attemptRemoteConfiguration];
+                                                          }];
 
-		[errView addAction:defaultAction];
-		[errView addAction:yesAction];
+        [errView addAction:defaultAction];
+        [errView addAction:yesAction];
 
-		[PhoneMainView.instance presentViewController:errView animated:YES completion:nil];
-	} else {
-		if ([[url scheme] isEqualToString:@"sip"]) {
-			// remove "sip://" from the URI, and do it correctly by taking resourceSpecifier and removing leading and
-			// trailing "/"
-			NSString *sipUri = [[url resourceSpecifier]
-				stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
-			[VIEW(DialerView) setAddress:sipUri];
-		}
-	}
-	return YES;
+        [PhoneMainView.instance presentViewController:errView animated:YES completion:nil];
+    } else {
+        if ([[url scheme] isEqualToString:@"sip"]) {
+            // remove "sip://" from the URI, and do it correctly by taking resourceSpecifier and removing leading and
+            // trailing "/"
+            NSString *sipUri = [[url resourceSpecifier]
+                                stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
+            [VIEW(DialerView) setAddress:sipUri];
+        }
+    }
+    return YES;
 }
 
 - (void)fixRing {

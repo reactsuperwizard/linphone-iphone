@@ -497,7 +497,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 						   confirmMessage:nil
 							onCancelClick:nil
 					  onConfirmationClick:^() {
-						if (_tableController.isEditing) {
+						if (self.tableController.isEditing) {
 							[self onCancelClick:sender];
 						}
 						[self removeContact];

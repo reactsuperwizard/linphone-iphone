@@ -504,9 +504,8 @@
 								   onSuccess:^(NSString *response) {
 									 if (response) {
 										 LOGI(@"get_account_expiration callback - response: %@", response);
-										 if ([response containsString:@"ERROR_NO_EXPIRATION"]) {
-											 expiryTime = 0;
-										 }
+										 if ([response containsString:@"ERROR_NO_EXPIRATION"])
+											 self->expiryTime = 0;
 									 }
 								   }
 									 onError:NULL
@@ -517,9 +516,8 @@
 - (BOOL)checkAccountTrial {
 	return [self callXmlrpcRequestWithParams:@"is_account_trial"
 								   onSuccess:^(NSString *response) {
-									 if (response) {
+									 if (response)
 										 LOGI(@"is_account_trial callback - response: %@", response);
-									 }
 								   }
 									 onError:NULL
 									   extra:NULL];

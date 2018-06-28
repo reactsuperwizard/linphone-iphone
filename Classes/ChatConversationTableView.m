@@ -265,9 +265,9 @@
 
 - (void)removeSelectionUsing:(void (^)(NSIndexPath *))remover {
 	[super removeSelectionUsing:^(NSIndexPath *indexPath) {
-		LinphoneEventLog *event = [[eventList objectAtIndex:indexPath.row] pointerValue];
+		LinphoneEventLog *event = [[self->eventList objectAtIndex:indexPath.row] pointerValue];
 		linphone_event_log_delete_from_database(event);
-		[eventList removeObjectAtIndex:indexPath.row];
+		[self->eventList removeObjectAtIndex:indexPath.row];
 	}];
 }
 

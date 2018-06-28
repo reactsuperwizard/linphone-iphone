@@ -784,9 +784,9 @@ void update_hash_cbs(LinphoneAccountCreator *creator, LinphoneAccountCreatorStat
 		UIAlertAction* continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil)
 																 style:UIAlertActionStyleDefault
 															   handler:^(UIAlertAction * action) {
-																   [settingsStore removeAccount];
+																   [self->settingsStore removeAccount];
 																   [self recomputeAccountLabelsAndSync];
-																   [_settingsController.navigationController popViewControllerAnimated:NO];
+																   [self.settingsController.navigationController popViewControllerAnimated:NO];
 															   }];
 		
 		[errView addAction:defaultAction];
@@ -818,13 +818,13 @@ void update_hash_cbs(LinphoneAccountCreator *creator, LinphoneAccountCreatorStat
 		UIAlertAction* continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save", nil)
 																 style:UIAlertActionStyleDefault
 															   handler:^(UIAlertAction * action) {
-																   NSString * pwd = alertView.textFields[0].text;
+                                                                   NSString * pwd = alertView.textFields[0].text;
 																   NSString * conf_pwd = alertView.textFields[1].text;
 																   if (pwd && ![pwd isEqualToString:@""]) {
 																	   if ([pwd isEqualToString:conf_pwd]) {
-																		   _tmpPwd = pwd;
+																		   self.tmpPwd = pwd;
 																		   LinphoneProxyConfig *config = bctbx_list_nth_data(linphone_core_get_proxy_config_list(LC),
-																													[settingsStore integerForKey:@"current_proxy_config_preference"]);
+																													[self->settingsStore integerForKey:@"current_proxy_config_preference"]);
 																		   const LinphoneAuthInfo *ai = linphone_proxy_config_find_auth_info(config);
 																   
 																		   LinphoneAccountCreator *account_creator = linphone_account_creator_new(

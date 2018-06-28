@@ -88,11 +88,11 @@
 - (void) loadAsset:(ALAsset*) asset {
 	UIImage *image = [[UIImage alloc] initWithCGImage:[asset thumbnail]];
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[_messageImageView setImage:image];
-		[_messageImageView setFullImageUrl:asset];
-		[_messageImageView stopLoading];
-		_messageImageView.hidden = NO;
-		_imageGestureRecognizer.enabled = YES;
+		[self.messageImageView setImage:image];
+		[self.messageImageView setFullImageUrl:asset];
+		[self.messageImageView stopLoading];
+		self.messageImageView.hidden = NO;
+		self.imageGestureRecognizer.enabled = YES;
 	});
 }
 

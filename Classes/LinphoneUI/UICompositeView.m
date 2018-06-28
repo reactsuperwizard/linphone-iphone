@@ -196,41 +196,16 @@
 
 #pragma mark - Rotation messages
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-								duration:(NSTimeInterval)duration {
-	currentOrientation = toInterfaceOrientation;
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.mainViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.detailsViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.tabBarViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.statusBarViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.sideMenuViewController willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.mainViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.detailsViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.tabBarViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.statusBarViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.sideMenuViewController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-										 duration:(NSTimeInterval)duration {
-	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation
-											duration:duration]; // Will invoke TPMultiLayout
-	[self.mainViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.detailsViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.tabBarViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.statusBarViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.sideMenuViewController willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self update:nil tabBar:nil statusBar:nil sideMenu:nil fullscreen:nil];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.mainViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.detailsViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.tabBarViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.statusBarViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.sideMenuViewController didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	if (interfaceOrientation == currentOrientation)
-		return YES;
+- (BOOL)shouldAutorotate {
 	return NO;
 }
 
