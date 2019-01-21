@@ -239,12 +239,7 @@
 #pragma deploymate pop
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *pathForFile=[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"GoogleService-Info.plist"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:pathForFile]){
-        // If GoogleService-Info.plist doesn't exist, not call this function avoiding a crash.
-        [FIRApp configure];
-    }
-    
+    [FIRApp configure];
     UIApplication *app = [UIApplication sharedApplication];
 	UIApplicationState state = app.applicationState;
 

@@ -7,7 +7,6 @@ xcuserdata/
 Classes/LinphoneIOSVersion.h
 Pods/
 Podfile.lock
-GoogleService-Info.plist
 build
 test-reports
 WORK
