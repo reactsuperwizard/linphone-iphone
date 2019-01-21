@@ -30,7 +30,7 @@
 
 #include "LinphoneManager.h"
 #include "linphone/linphonecore.h"
-#include "FIRApp.h"
+//#include "FIRApp.h"
 
 @implementation LinphoneAppDelegate
 
@@ -239,7 +239,7 @@
 #pragma deploymate pop
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [FIRApp configure];
+    //[FIRApp configure];
     UIApplication *app = [UIApplication sharedApplication];
 	UIApplicationState state = app.applicationState;
 

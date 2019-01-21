@@ -28,7 +28,6 @@ target 'liblinphoneTester' do
   pod 'Firebase/Core'
   pod 'Fabric', '~> 1.9.0'
   pod 'Crashlytics', '~> 3.12.0'
-  pod 'Firebase/Performance'
   
   target 'liblinphoneTesterTests' do
     inherit! :search_paths
@@ -43,10 +42,9 @@ target 'linphone' do
 
   # Pods for linphone
   pod 'linphone-sdk', '~> 4.1-152-g7a39770'
-  pod 'Firebase/Core'
-  pod 'Fabric', '~> 1.9.0'
-  pod 'Crashlytics', '~> 3.12.0'
-  pod 'Firebase/Performance'
+  #pod 'Firebase/Core'
+  #pod 'Fabric', '~> 1.9.0'
+  #pod 'Crashlytics', '~> 3.12.0'
 
   target 'linphoneTests' do
     inherit! :search_paths
